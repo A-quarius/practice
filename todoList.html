@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+    <style>
+
+        ul li {
+            list-style: none;
+        }
+        #app {
+            height: 500px;
+            width: 500px;
+            background-color: #fcc;
+        }
+        input {
+            background-color: #ffcccc;
+        }
+        h1 {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="title" >
+            <h1><p>备忘录</p></h1>
+            <input type="text" v-model="changeMsg" @keyup.enter="changeVal">
+            <button @click="changeVal">提交</button>
+            <span v-show="flag" style="color: red; font-size: 15px ">输入不能为空</span>
+            <p >已经做完的事</p>
+            <ul>
+                <li v-for="item in removeArr">{{item}}</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <p>没做的事</p>
+            <ul>
+                <li v-for="(item,index) in changeArr">{{item}}
+                    <button @click="remove_Msg(index)">X</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                changeMsg: '',
+                changeArr: [],
+                removeArr: [],
+                flag: false
+            },
+            methods: {
+                changeVal() {
+                    if (this.changeMsg.trim() == '') {
+                        this.flag = true;
+                        this.changeMsg = '';
+                    } else {
+                        this.flag = false;
+                        this.changeArr.push(this.changeMsg);
+                        this.changeMsg = '';
+                    }
+                },
+                remove_Msg(index) {
+                    this.removeArr.push(...this.changeArr.splice(index, 1));
+
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
