@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+    </div>
+
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "哈哈哈"
+        },
+        methods: {
+            a () {
+                console.log(this.msg)
+            }
+        },
+        beforeCreate() {    // vue初始化之前，初始化生命周期，初始化事件对象
+            console.log("========beforeCreate=========");
+            console.log(this.a)  // undefined
+        },
+        created() {     // vue创建完毕，初始化实例中的数据及方法。
+            console.log("==============created============")
+            console.log(this.msg);
+            console.log("这个时候初始化了data里的数据")
+        },
+        // created 这个周期后， 会进行判断vue实例中是否存在el，如果存在继续判断是否存在template，如果存在template就生成render函数
+        // 同上一个render.html
+        beforeMount() {
+            // 挂载前 根据创建实例后的一系列判断，决定实例挂载到哪，并创建虚拟的dom来对应。
+            console.log("=======beforeMount==========")
+        },
+        mounted() {     //将方法和数据挂载到dom上， 这里还有两个阶段，数据改变时候：beforeUpdate；数据更新完毕：updated
+                        // 数据发生改变时，虚拟dom重新render。
+            console.log("=======mounted=========")
+        },
+
+        // 这个时候如果调用vm.$destroy()；
+        beforeDestroy() {
+            console.log("=====beforeDestroy=======")
+        },
+        destroyed() {
+          //这个时候实例已经被销毁，实例上的方法已经失效
+          console.log("======destroyed=======")
+        }
+
+
+    })
+
+</script>
+</body>
+</html>
