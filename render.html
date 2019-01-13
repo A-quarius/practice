@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+<script>
+    //vue render的优先级最高，没有render函数就去找template模板，没有template模板就去找el挂载的实例，将这个实例作为一个template模板
+    const vm = new Vue({
+        // el: "#app"  这里的el可以不写，但是要在外面使用vm.$mount("#app")
+        data: {
+            red: false,
+            green: true,
+            msg: "aaa"
+        },
+        template:
+            "<div>我是模板{{msg}}</div>",
+        render( h ) {
+            return h("div",{
+                style: {
+                    color: "green",
+                    fontSize: "12px"
+                },
+                class: {
+                    red: this.red,
+                    green: this.green
+                }
+            },[
+                h("h1"),
+                h("h2")
+            ])
+        }
+
+    });
+
+    vm.$mount('#app')
+</script>
+</body>
+</html>
